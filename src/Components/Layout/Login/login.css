@@ -1,0 +1,241 @@
+*{
+    box-sizing: border-box;
+}
+
+.login-header {
+    color: black;
+    background-color: #1BA1E2;
+    padding: 10px;
+    font-family: Times New Roman;
+    text-align: Left;
+}
+
+.subtitle {
+    text-align: left;
+    color: #1BA1E2;
+    margin-top: 200px;
+    font-size: 36px;
+}
+
+.info {
+    margin-top: 150px;
+}
+
+#emails {
+    width: 350px;
+}
+
+#passwords {
+    width: 350px;
+}
+
+#text {
+    font-size:18px;
+    text-align:justify;
+}
+
+.label {
+    text-align: left;
+    color: #1BA1E2
+}
+.col-md-6 {
+    border-right: 1px solid black;
+}
+
+#nhs {
+    height: 50px;
+}
+.btncustom {
+    text-align: left;
+}
+
+#login-btn {
+    background-color: #1BA1E2;
+    border: 1px solid #1BA1E2;
+    border-radius: 3px;
+    color: #ffff;
+    width: 80px;
+}
+
+#login-btn:hover {
+    background-color: #0EB8E2;
+}
+
+.btncustom2 {
+    text-align: left;
+}
+
+.forgot-password-btn {
+    text-align: left;
+}
+
+.c-e-label2 {
+    text-align: left;
+}
+
+/* -----------------------------------------Confirm Email------------------------------------- */
+
+#confirm-email {
+    margin-right: 800px;
+    width: 350px;
+}
+
+#confirm-email-btn {
+    border: none;
+    background-color: #1BA1E2;
+    border-radius: 3px;
+    color: #fff;
+    width: 80px;
+}
+
+#confirm-email-btn:hover {
+    background-color: #0EB8E2;
+}
+
+#cancel-btn {
+    margin-left: 220px;
+}
+
+.c-e-label2 {
+    color: #1BA1E2;
+}
+
+.fas fa-user {
+    height: 20px;
+}
+
+.text-center {
+    margin-top: 150px;
+    margin-right: 525px;
+    color: #1BA1E2;
+}
+
+.img {
+    margin-top: 150px;
+}
+
+/* ####################################reset password######################################## */
+
+.reset-password-form {
+    text-align: left;
+    color: #1BA1E2;
+}
+#confirm-passwords {
+    width: 350px;
+}
+
+.back-li-btn {
+    margin: 10px 0 30px 0;
+}
+
+.requirements-container {
+    width: 73%;
+    margin: 25px 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: lightblue;
+}
+
+.requirements-container p {
+    color: #1D044E;
+}
+
+#reset-link-btn {
+    background-color: #1BA1E2;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* ######################################Media Queries######################################## */
+
+@media screen and (max-width: 700px) {
+    .key-icon, #nhs{
+        height: 50px;
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    footer, .login-header {
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    #nhs {
+        font-size: 15px;
+    }
+    #text {
+        font-size: 10px;
+    }
+    .forgot-password-btn {
+        font-size: 11px;
+        text-align: center;
+    }
+    #login-btn {
+        font-size: 10px;
+        width: 50px;
+    }
+    .btncustom {
+        text-align: center;
+    }
+    .subtitle {
+        font-size: 20px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #emails {
+        width: 250px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    #passwords {
+        width: 250px;
+        height: 30px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #confirm-passwords {
+        width: 250px;
+        height: 30px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #reset-label {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .label {
+        text-align: center;
+    }
+
+    #btn {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .info {
+        height: 15px;
+        margin: 10px;
+    }
+
+    .custom-reset-btn {
+        text-align: center;
+    }
+
+}
+
+.error-message {
+    text-align: left;
+}

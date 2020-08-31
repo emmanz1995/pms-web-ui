@@ -1,0 +1,10 @@
+node_modules
+build/
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/pms-frontend-ui.iml
+.idea/vcs.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/frontend-ui.iml
+.idea/workspace.xml

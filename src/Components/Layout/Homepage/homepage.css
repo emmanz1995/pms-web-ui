@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+.img-home {
+    height: 250px;
+    width: 100%;
+}
+
+.img-banner {
+    height: 100%;
+    width: 100%;
+}
+
+.centered-title{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #b8d3e0;
+}
+
+.home-btn {
+    padding: 10px;
+}
+
+.home-btn:hover {
+    background-color: #1BA1E2;
+}
+
+@media screen and (width: 375px) {
+    .card-body {
+        height: 350px;
+    }
+    .home-btn {
+        font-size: 11px;
+    }
+    .A-title, .V-title, .S-title {
+        font-size: 14px;
+    }
+}

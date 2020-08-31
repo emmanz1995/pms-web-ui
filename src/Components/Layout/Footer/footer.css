@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
+.footer {
+    background-color: #1BA1E2;
+        padding: 15px;
+        text-align: center;
+        font-family: Times New Roman, serif;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+}

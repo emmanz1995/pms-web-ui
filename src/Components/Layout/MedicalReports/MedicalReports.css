@@ -1,0 +1,52 @@
+*{
+    box-sizing: border-box;
+}
+.card {
+    width: 50%;
+    border: 1px solid #000;
+    text-align: left;
+}
+
+.med-bread {
+    background-color: white;
+    width: 50%;
+}
+
+#btn-upload {
+    float: left;
+    width: 115px;
+    height: 30px;
+    background-color: #1BA1E2;
+    border: none;
+    border-radius: 3px;
+}
+
+#btn-upload:hover {
+    background-color: #66FFFF;
+}
+
+.medical-report-title {
+    text-align: left;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.main-panel {
+    overflow-y: scroll;
+}
+
+.table {
+    overflow-x: auto;
+    border-collapse: collapse;
+    width: 50px;
+}
+
+@media screen and (max-width: 650px) {
+    #medical-text {
+        font-size: 11px;
+    }
+
+    .table {
+        font-size: 9px;
+    }
+}

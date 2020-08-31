@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+
+.nav-bar {
+    padding: 15px 15px;
+    background-color: #1BA1E2;
+    position: fixed;
+    border: solid 1px #000000;
+    width: 100%;
+}
+
+.nav {
+    background-color: #1BA1E2;
+}
+
+/* Used flex and space between to set the user's name and img to the right side of the nav */
+.nav-right {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1rem;
+}
+
+.fa-user {
+    height: 25px;
+    margin: 0.7rem 0.7rem;
+}
+
+.btn-link-nav {
+    cursor: pointer;
+}
+
+#pcms-logo {
+    margin: 0 1rem;
+}
+
+@media screen and (max-width:530px) {
+    .nav-link {
+        margin-bottom: -5px;
+    }
+
+    .mini-img {
+        margin-left: 190px;
+        margin-bottom: -4px;
+    }
+
+    #pcms-logo {
+        height: 20px;
+    }
+}

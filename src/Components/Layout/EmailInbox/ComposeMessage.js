@@ -4,6 +4,7 @@ import { AsyncPaginate } from 'react-select-async-paginate';
 import { MessageInboxService } from "../../../Service/api/MessageInboxService";
 import SimpleReactValidator from 'simple-react-validator';
 import { withAlert } from 'react-alert'
+import './EmailDashboard.css';
 
 class ComposeMessage extends React.Component {
     _isMounted = false;

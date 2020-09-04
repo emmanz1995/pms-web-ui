@@ -129,7 +129,7 @@ class EmailDashboard extends Component {
                         <Sidebar />
                     </div>
                     <div className="col-md-7">
-                        <h2 className="title">Email Dashboard</h2>
+                        <h2 className="title">Message Inbox</h2>
                         <ComposeMessage currentUserId={currentUserInfo?.userId} />
                         {!isLoading ?
                             <div>

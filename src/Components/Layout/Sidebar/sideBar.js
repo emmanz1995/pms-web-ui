@@ -21,7 +21,7 @@ class sideBar extends Component {
             <div className="side-bar text-center">
                 <NavLink  to="/profile" isActive={this.onPaths(["/^\/profile"])} id="sidebar-content"><i className="fas fa-id-badge" />&nbsp;User Profile</NavLink >
                 {PrivilegeService.hasViewMedicalRecordAccess() && <NavLink  to="/medicalrecord" isActive={this.onPaths(["/^\/medicalrecord", "/^\/medicalreport"])} id="sidebar-content"><i className="fas fa-laptop-medical" />&nbsp;Medical Records</NavLink >}
-                {PrivilegeService.hasMessageInboxAccess() && <NavLink  to="/emaildashboard"  isActive={this.onPaths(["/^\/emaildashboard", "/^\/viewemail"])} id="sidebar-content"><i className="fas fa-inbox" />&nbsp;Email inbox</NavLink > }
+                {PrivilegeService.hasMessageInboxAccess() && <NavLink  to="/emaildashboard"  isActive={this.onPaths(["/^\/emaildashboard", "/^\/viewemail"])} id="sidebar-content"><i className="fas fa-inbox" />&nbsp;Message inbox</NavLink > }
             </div>
         )
     }

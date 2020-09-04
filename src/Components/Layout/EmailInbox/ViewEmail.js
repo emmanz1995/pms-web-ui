@@ -47,7 +47,7 @@ class ViewEmail extends Component {
                     <div className="col-md-9">
                         <h2 className="view-title">View Email</h2>
                         <Breadcrumb className="mess-bread">
-                            <BreadcrumbItem><Link to="/emaildashboard">EmailDashboard</Link></BreadcrumbItem>
+                            <BreadcrumbItem><Link to="/emaildashboard">Message Inbox</Link></BreadcrumbItem>
                             <BreadcrumbItem>View message</BreadcrumbItem>
                         </Breadcrumb>
                         <div className="panel panel-default">

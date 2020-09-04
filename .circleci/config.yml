@@ -26,24 +26,3 @@ jobs:
           name: Run tests
           # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
           command: npm test # replace with `yarn test` if using yarn
-
-orbs:
-  heroku: circleci/heroku@0.0.10
-workflows:
-  version: 2
-  heroku_deploy:
-    jobs:
-      - build
-      - hold:
-          filters:
-            branches:
-              only: master
-          type: approval # requires that an in-app button be clicked
-          requires:
-            - build
-      - heroku/deploy-via-git:
-          filters:
-            branches:
-              only: master
-          requires:
-            - hold

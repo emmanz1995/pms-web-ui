@@ -54,8 +54,7 @@ class ChangePassword extends Component {
             .then((success) => {
                 this.props.alert.success('You have successfully changed your password');
                 this.setState({modal: !this.state.modal})
-            })
-            .catch((fail) => {
+            }).catch((fail) => {
                 console.log(fail);
                 this.setState({passwordResetError: fail, passwordServerError: fail});
             });

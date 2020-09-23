@@ -5,7 +5,7 @@ const footer = (props) => {
     return (
         <div>
             <div className="footer">
-                Powered by Emmanuel and Anoj &copy;{new Date().getFullYear()}
+                Powered by Emmanuel &copy;{new Date().getFullYear()}
             </div>
         </div>
     );

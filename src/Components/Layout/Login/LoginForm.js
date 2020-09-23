@@ -71,7 +71,7 @@ class LoginForm extends Component {
                                         onChange={this.onChange}
                                     />
                                     <div className="error-message">
-                                        {this.validator.message('email', this.state.email, 'required|email')}
+                                        {this.validator.message('email', this.state.email, 'required|email', { className: 'text-danger' })}
                                     </div>
                                 </FormGroup>
                                 <FormGroup>
@@ -87,7 +87,7 @@ class LoginForm extends Component {
                                         onChange={this.onChange}
                                     />
                                     <div className="error-message">
-                                        {this.validator.message('password', this.state.password, 'required|min:4')}
+                                        {this.validator.message('password', this.state.password, 'required|min:4', { className: 'text-danger' })}
                                     </div>
                                 </FormGroup>
                                     <div className="btncustom">

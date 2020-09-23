@@ -62,7 +62,7 @@ onChange (e) {
                                         <Input type="text" name="email" id="confirm-email" value={this.state.email} onChange={this.onChange}/>
                                     </FormGroup>
                                     <div className="error-message">
-                                        {this.validator.message('email', this.state.email, 'required|email')}
+                                        {this.validator.message('email', this.state.email, 'required|email', {className: 'text-danger'})}
                                     </div>
                                     <div className="btncustom2">
                                         <input id="confirm-email-btn" type="button" value="Submit" onClick={this.forgetPassword} /><Link to="/" id="cancel-btn">Cancel</Link>

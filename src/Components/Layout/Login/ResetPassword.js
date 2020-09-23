@@ -54,7 +54,7 @@ class ResetPassword extends Component {
             .onResetPassword(credential, token)
             .then(success => {
                 this.props.alert.success('You have successfully changed your password');
-                this.props.history.push('/login');
+                this.props.history.push('/');
             })
             .catch(fail => {
                 console.log(fail);

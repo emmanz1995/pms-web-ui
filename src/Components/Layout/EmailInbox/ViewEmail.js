@@ -13,6 +13,8 @@ class ViewEmail extends Component {
 
     constructor(props) {
         super(props);
+        // setting up the state used in this class
+        // this setup based on https://jasonwatmore.com/post/2018/09/11/react-basic-http-authentication-tutorial-example#login-page-jsx
         this.state = {
             emailData: {}
         }
@@ -20,8 +22,9 @@ class ViewEmail extends Component {
     componentDidMount() {
         this._isMounted = true;
 
+        // defining emailId as a prop to be used in this class
         const { emailId } = this.props.location.state
-
+        // injecting getEmail function from MessageInboxService with emailId as an argument
         MessageInboxService.getEmail(emailId)
             .then(value => {
                     this._isMounted && this.setState({emailData: value})
@@ -35,6 +38,7 @@ class ViewEmail extends Component {
     }
 
     render() {
+        // defining emailData and emailInboxId as a state and prop so they can be used in the jsx code without labelling them with this.state and prop
         const { emailData } = this.state;
         const { emailInboxId } = this.props.location.state
         return(

@@ -21,7 +21,8 @@ class EmailDashboard extends Component {
 
     constructor(props) {
         super(props)
-        this.state= {
+        // setting all the states
+        this.state = {
             isLoading: true,
             currentUserInfo: null,
             results: [],
@@ -29,7 +30,7 @@ class EmailDashboard extends Component {
             totalRecords: 0,
             totalPages: 0
         }
-
+        // binding all the functions
         this.handlePaginationChange = this.handlePaginationChange.bind(this);
         this.onMessageReceived = this.onMessageReceived.bind(this);
         this.onConnected = this.onConnected.bind(this);
@@ -39,14 +40,14 @@ class EmailDashboard extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-
+        // defining currentUser as constable with reference to currentUserValue from authService class
         const currentUser = authService.currentUserValue;
-
+        // setting the new currentUserInfo state as currentUser directly from authService.js
         this.setState({ currentUserInfo: currentUser })
-
+        // setting currentUser with page values for the pagination
         currentUser && this.getEmailInbox(this.state.currentPage - 1, this._limit, currentUser?.userId);
     }
-
+    // code based on https://medium.com/practo-engineering/websockets-in-react-the-component-way-368730334eef
     connect = () => {
         try {
             stompClient = MessageInboxService.stompClient();
@@ -56,7 +57,7 @@ class EmailDashboard extends Component {
         }
 
     }
-
+    // code based on https://github.com/zcmgyu/websocket-spring-react/blob/master/websocket-react/src/NotificationForm.js
     onConnected = () => {
         try {
             const { currentUserInfo } = this.state;
@@ -73,8 +74,9 @@ class EmailDashboard extends Component {
             message && this.setState({results: [message, ...results]})
         }
     }
-
+    // this function is the get the email inbox details
     getEmailInbox(page, size, userId) {
+        // injecting getEmailInboxes function from MessageInboxService and passing all of its values as arguments
         MessageInboxService.getEmailInboxes(size, page, userId, this._inboxStatus, this._disablePagination)
             .then(value => {
                 if (this._isMounted) {
@@ -87,7 +89,7 @@ class EmailDashboard extends Component {
                 this.setState({results: [], isLoading: false})
             });
     }
-
+    // setting up the pagination for the message inbox dashboard
     viewPaginatedResponse(response, limit, currentState, disablePagination) {
         let state = {}
         state.results = response.results
@@ -98,7 +100,8 @@ class EmailDashboard extends Component {
         if (response.totalRecords !== currentState.totalRecords) {
             state.totalRecords = response.totalRecords
         }
-
+        // setting calculations for the pagination by using math ceil
+        // code based on https://medium.com/how-to-react/create-pagination-in-reactjs-e4326c1b9855
         if (!disablePagination) {
             let calculatedTotalPages = Math.ceil(response.totalRecords / limit)
             if (calculatedTotalPages !== currentState.totalPages) {
@@ -107,7 +110,7 @@ class EmailDashboard extends Component {
         }
         return state
     }
-
+    // code based on https://medium.com/how-to-react/create-pagination-in-reactjs-e4326c1b9855
     handlePaginationChange(event, value) {
         if (value !== this.state.currentPage) {
             this.getEmailInbox(value - 1, this._limit, this.state.currentUserInfo.userId)
@@ -120,6 +123,7 @@ class EmailDashboard extends Component {
     }
 
     render() {
+        // code based on https://medium.com/how-to-react/create-pagination-in-reactjs-e4326c1b9855
         const { results, isLoading, totalPages, currentPage, currentUserInfo, totalRecords } = this.state;
         return(
             <div className="body">
@@ -133,6 +137,8 @@ class EmailDashboard extends Component {
                         <ComposeMessage currentUserId={currentUserInfo?.userId} />
                         {!isLoading ?
                             <div>
+                                {/* mapping results to return and display the users message details */}
+                                {/* code based on http://www.hackingwithreact.com/read/1/13/rendering-an-array-of-data-with-map-and-jsx */}
                                 {results && results.length > 0 ? results?.map((result, key) => {
                                     return (
                                         <div key={key}>

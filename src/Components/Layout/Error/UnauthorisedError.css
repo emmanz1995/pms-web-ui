@@ -13,7 +13,7 @@
     transform-origin: 80% 30%;
     animation: wiggle .2s infinite;
 }
-
+/* adds animations to the whistle image */
 @keyframes wiggle {
     0%{
         transform: rotate(3deg);

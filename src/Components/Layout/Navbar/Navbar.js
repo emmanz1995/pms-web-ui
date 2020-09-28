@@ -19,7 +19,9 @@ import {history} from "../../../Util/HistoryUtil";
 class Header extends Component {
     constructor(props) {
         super(props);
+        // binding all the functions
         this.toggle = this.toggle.bind(this);
+        // setting all the states
         this.state = {
             isOpen: false,
             navCollapsed: true,
@@ -30,17 +32,22 @@ class Header extends Component {
     }
 
     logout() {
+        // injects the onLogout function into navbar class from authService
         authService.onLogout();
+        // redirects the user back to the login page once they have logged out
         history.push("/");
     }
 
     componentDidMount() {
+        // defining currentUser as constable with reference to currentUserValue from authService class
         const currentUser = authService.currentUserValue;
+        // setting userInfo state with currentUser state
         this.setState ({
             userInfo: currentUser
         })
     }
-
+    // event to open the modal
+    // code based on https://bit.dev/reactstrap/reactstrap/modal
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen

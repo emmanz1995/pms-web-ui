@@ -7,6 +7,7 @@ import { PrivilegeService } from "../../../Service/PrivilegeService";
 
 class Homepage extends React.Component {
     render() {
+        // setting the privileges up by injecting them from PrivilegeService
         const viewMedicalRecordAccess = PrivilegeService.hasViewMedicalRecordAccess();
         const messageInboxAccess = PrivilegeService.hasMessageInboxAccess();
         return(
@@ -38,6 +39,7 @@ class Homepage extends React.Component {
                                             <p>Once you have changed your password, you can view your view your medical reports or you can download your the appointment letters that have been lost. If your a doctor you can upload a document to your patient.</p>
                                         </div>
                                         <div className="card-footer">
+                                            {/* setting the viewMedicalRecordAccess privilege to medical records footer button */}
                                             { viewMedicalRecordAccess ? <Link to="/medicalrecord" className="home-btn" style={{textDecoration: 'none', color: 'black'}}>Medical Records</Link> : 'No Access' }
                                         </div>
                                     </div>
@@ -49,6 +51,7 @@ class Homepage extends React.Component {
                                             <p>Access your very own message dashboard where you can view the messages that the other users have sent you. Here you will be able to compose a new message and send your message to an allocated user.</p>
                                         </div>
                                         <div className="card-footer">
+                                            {/* setting the messageInboxAccess privilege to message inbox dashboard footer button */}
                                             { messageInboxAccess ? <Link to="/emaildashboard" className="home-btn" style={{textDecoration: 'none', color: 'black'}}>Send Message</Link> : 'No Access' }
                                         </div>
                                     </div>
@@ -57,7 +60,6 @@ class Homepage extends React.Component {
                         </div>
                     </div>
                 </div>
-
                 <Footer />
             </div>
         );

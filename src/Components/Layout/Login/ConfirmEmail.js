@@ -10,36 +10,43 @@ import { Link } from 'react-router-dom';
 class ConfirmEmail extends Component {
 constructor(props) {
     super (props)
+    // setting all the states
     this.state = {
         email:''
     }
+    // set up based on https://www.npmjs.com/package/simple-react-validator
     this.validator = new SimpleReactValidator();
+    // binding all the functions
     this.forgetPassword = this.forgetPassword.bind(this);
     this.onChange = this.onChange.bind(this);
 }
 
-forgetPassword(e) {
-    e.preventDefault();
-
-    if(this.validator.allValid()) {
-        AccountService
-        .onForgetPassword(this.state.email)
-        .then(success => {
-            this.setState({email: ''});
-            this.props.alert.success("Password Reset Link has been sent to your email");            
-        })
-        .catch(error => this.props.alert.error("We're sorry. We weren't able to identify you given the information provided!"));
-    } else {
-        this.validator.showMessages();
-        this.forceUpdate();
+    forgetPassword(e) {
+        e.preventDefault();
+        // this conditional statement is based on https://www.npmjs.com/package/simple-react-validator
+        if(this.validator.allValid()) {
+            // injecting onForgetPassword function from AccountService with email as an argument
+            AccountService
+            .onForgetPassword(this.state.email)
+            // setting a success promise that will alert out a message if password reset link has been sent to your email
+            // code based on https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example and https://www.npmjs.com/package/react-alert
+            .then(success => {
+                this.setState({email: ''});
+                this.props.alert.success("Password Reset Link has been sent to your email");
+            })
+            // handles error when there is a error that occurs
+            .catch(error => this.props.alert.error("We're sorry. We weren't able to identify you given the information provided!"));
+        } else {
+            // these codes are based on https://www.npmjs.com/package/simple-react-validator
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
     }
-}
-
-onChange (e) {
-    console.log({[e.target.name]: e.target.value});
-    this.setState({[e.target.name]: e.target.value});
-};
-
+    // code based on https://medium.com/capital-one-tech/how-to-work-with-forms-inputs-and-events-in-react-c337171b923b
+    onChange (e) {
+        console.log({[e.target.name]: e.target.value});
+        this.setState({[e.target.name]: e.target.value});
+    };
     render() {
         return (
             <div>
@@ -62,6 +69,7 @@ onChange (e) {
                                         <Input type="text" name="email" id="confirm-email" value={this.state.email} onChange={this.onChange}/>
                                     </FormGroup>
                                     <div className="error-message">
+                                        {/* based on https://www.npmjs.com/package/simple-react-validator */}
                                         {this.validator.message('email', this.state.email, 'required|email', {className: 'text-danger'})}
                                     </div>
                                     <div className="btncustom2">

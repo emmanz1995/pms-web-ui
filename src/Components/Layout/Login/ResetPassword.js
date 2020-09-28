@@ -9,12 +9,15 @@ import Footer from "../Footer/Footer";
 class ResetPassword extends Component {
     constructor(props) {
         super(props);
+        // setting all the states
         this.state = {
             password: '', 
             confirmPassword: '',
             verifyResetError: '',
             passwordResetError: ''
         }
+        // set up based on https://www.npmjs.com/package/simple-react-validator
+        // this sets up the custom message for error message and creates the regex needed to validate password
         this.validator = new SimpleReactValidator({
             validators: {
               password: {
@@ -26,41 +29,52 @@ class ResetPassword extends Component {
               }
             }
           });
+        // binding all the functions
         this.onChange = this.onChange.bind(this);
         this.resetPassword = this.resetPassword.bind(this);
     }
 
     componentDidMount () {
+        // defines token in this class after being injected from another class as a prop
         const token = this.props.match.params.passwordResetToken;
-        AccountService.onVerifyReset(token)        
+        // injecting onResetPassword function from AccountService with credentials and userId as arguments
+        AccountService.onVerifyReset(token)
+        // handles error when there is a error that occurs
         .catch(fail => {
             console.log(fail);
             this.setState({verifyResetError: fail});
         });
     }
-
+    // function allows the user to type something on the input fields
     onChange (e) {
         this.setState({[e.target.name]: e.target.value});
     }
 
     resetPassword (e) {
         e.preventDefault();
+        // this conditional statement is based on https://www.npmjs.com/package/simple-react-validator
         if (this.validator.allValid()) {
-
             const token = this.props.match.params.passwordResetToken;
+            // setting password and confirmPassword variables from AccountService with states
+            // defining credentials as a variable with both the password and confirmPassword variable from AccountService
             const credential = { password: this.state.password, confirmPassword: this.state.confirmPassword };
-
+            // injecting onResetPassword function from AccountService with credentials and userId as arguments
             AccountService
             .onResetPassword(credential, token)
+            // setting a success promise that will alert out a message if the password was reset successfully
+            // code based on https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example and https://www.npmjs.com/package/react-alert
             .then(success => {
                 this.props.alert.success('You have successfully changed your password');
+                // redirects user to the login page once they have successfully changed their password
                 this.props.history.push('/');
             })
+            // handles error when there is a error that occurs
             .catch(fail => {
                 console.log(fail);
                 this.setState({passwordResetError: fail});
             });
         } else {
+            // these codes are based on https://www.npmjs.com/package/simple-react-validator
             this.validator.showMessages();
             this.forceUpdate();
         } 
@@ -69,6 +83,7 @@ class ResetPassword extends Component {
     render() {
         const verifyResetError = this.state.verifyResetError;
 
+        // custom error messages for confirm password
         const customConfirmPasswordMessage = { messages: 
             {
                 in: 'New Password and Confirm Password does not match',
@@ -77,6 +92,7 @@ class ResetPassword extends Component {
             }
         };
 
+        // custom error messages for password
         const customPasswordMessage = { messages: 
             {
                 password: 'New Password must meet the requirements with minimum of 6 characters, atleast 1 capital letter, 1 symbol and 1 number',
@@ -86,6 +102,7 @@ class ResetPassword extends Component {
         };
 
         const passwordResetError = this.state.passwordResetError ||
+        {/*based on https://www.npmjs.com/package/simple-react-validator*/}
         this.validator.message('newPassword', this.state.password, `required|min:6|max:150|password`, customPasswordMessage) ||
         this.validator.message('confirmPassword', this.state.confirmPassword, `required|min:6|max:150|in:${this.state.password}`, customConfirmPasswordMessage);
 
@@ -112,6 +129,8 @@ class ResetPassword extends Component {
                                     <p><li>Password must contain at least 1 capital letter</li></p>
                                     <p><li>Password must contain at least 1 symbol and 1 number</li></p>
                                 </div>
+                            {/* creating the alert message in jsx using bootstrap 4 class component */}
+                            {/* code based on https://getbootstrap.com/docs/4.0/components/alerts/ */}
                             <div className="alert alert-danger" role="alert" style={{ display: (verifyResetError || passwordResetError ? 'block' : 'none'), width:'73%' }} >
                                 {verifyResetError || passwordResetError}
                             </div>

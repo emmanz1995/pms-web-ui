@@ -6,12 +6,14 @@ import { withAlert } from 'react-alert'
 import { DocumentService } from "../../../Service/api/DocumentService";
 
 class Upload extends Component {
-
+    // setting the file types inside _fileTypes variable
     _fileTypes = ".doc,.docx,.ppt,.pptx,.xls,.xlsx,.png,.jpg,.pdf,.txt,.jpeg"
+    // defining _featureType as MEDICAL_RECORD_FEATURE
     _featureType = "MEDICAL_RECORD_FEATURE"
 
     constructor(props) {
         super(props);
+        // setting all the states here
         this.state = {
             modal: false,
             selectedFile: null,
@@ -19,15 +21,19 @@ class Upload extends Component {
             uploadFromUserId: null,
             validationErrors: []
         }
+        // binding all the functions created for medical report
         this.toggle = this.toggle.bind(this);
         this.submit = this.submit.bind(this);
         this.onFileChange = this.onFileChange.bind(this);
+        // set up based on https://www.npmjs.com/package/simple-react-validator
         this.validator = new SimpleReactValidator();
     }
-
+    // creating the toggle function
     toggle(e) {
         e.preventDefault();
+        // hides validator messages once the upload button is pressed
         this.validator.hideMessages();
+        // clears all of the values once the file is uploaded after hitting the upload button
         this.setState({
             modal: !this.state.modal,
             selectedFile: null,
@@ -36,46 +42,50 @@ class Upload extends Component {
             validationErrors: []
         })
     }
-
+    // creates the submit function
     submit(e) {
         e.preventDefault();
-
+        // logs upload to user id, upload from user id and selected file onto the console
         console.log(
             `Upload to user id: ${this.props.uploadToUser},
             Upload from user id: ${this.props.uploadFromUserId},
             Selected file: ${this.state.selectedFile}`
         );
-
+        // sets validationErrors as an array
         let validationErrors = [];
-
+        // sets validation error when there is no file select
         if (!this.state.selectedFile) {
             validationErrors.push("File is required")
         }
-
+        // sets validation error when there is a problem retrieving uploadToUser userId
         if (!this.props.uploadToUser?.userId) {
             validationErrors.push("uploadToUser is required")
         }
-
+        // sets validation error when there is a problem retrieving uploadFromUser userId
         if (!this.props.uploadFromUserId) {
             validationErrors.push("UploadFromUserId is required")
         }
 
         // pass this back to medical report.js
         validationErrors.length <= 0 && DocumentService
+            // injected onFileUpload from DocumentService
             .onFileUpload(this.state.selectedFile, this.props.uploadToUser.userId, this.props.uploadFromUserId, this._featureType)
+            // setting a success promise that will alert out a message if file was successfully uploaded
+            // code based on https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example and https://www.npmjs.com/package/react-alert
             .then(success => {
                 this.props.alert.success(`File has been uploaded for user with email: ${this.props.uploadToUser.email}`);
                 this.setState({modal: !this.state.modal})
             })
+            // handles error when there is a error that occurs
             .catch(fail => {
                 console.log(fail);
                 this.setState({validationErrors: [fail]});
             })
-
+        // sets length for validationErrors and sets
         validationErrors.length > 0 && this.setState({validationErrors: validationErrors});
 
     }
-
+    // code based on https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/
     onFileChange(e) {
         const selectedFile = e.target.files[0];
 

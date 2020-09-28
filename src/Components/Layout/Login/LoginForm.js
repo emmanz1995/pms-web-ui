@@ -7,44 +7,51 @@ import LoginHeader from './LoginHeader';
 import Footer from './../Footer/Footer';
 import { Link } from "react-router-dom";
 import SimpleReactValidator from 'simple-react-validator';
-import Grid from '@material-ui/core/Grid';
 
 class LoginForm extends Component {
 
     constructor (props) {
         super (props);
+        // setting all the states
         this.state = {
             email: "",
             password: ""
         };
-        
+
+        // set up based on https://www.npmjs.com/package/simple-react-validator
         this.validator = new SimpleReactValidator();
+        // binding all the functions
         this.login = this.login.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
     login(e) {
         e.preventDefault();
-        if (this.validator.allValid()) {      
+        // this conditional statement is based on https://www.npmjs.com/package/simple-react-validator
+        if (this.validator.allValid()) {
+            // injecting onLogin function from AccountService with email and password as arguments
             authService
-            .onLogin({ username: this.state.email, password: this.state.password })            
+            .onLogin({ username: this.state.email, password: this.state.password })
+            // handles error when there is a error that occurs
             .catch(error => this.props.alert.error(error));
         } else {
+            // these codes are based on https://www.npmjs.com/package/simple-react-validator
             this.validator.showMessages();
             this.forceUpdate();
         } 
     }
-    
-
+    // code based on https://medium.com/capital-one-tech/how-to-work-with-forms-inputs-and-events-in-react-c337171b923b
     onChange(e) {
-        // console.log({[e.target.name]: e.target.value});
         this.setState({[e.target.name]: e.target.value});
     };
-
     render(){
+        // this code will redirect the user to the homepage once they are logged in
+        // code based on https://www.9lessons.info/2017/10/reactjs-php-restful-api-token.html
         if (authService.currentUserValue) {
             return <Redirect to={{ pathname: "/home" }} />;
         }
+        // returns jsx code
+        // bootstrap 4 is heavily used here
         return(
             <div>
                 <LoginHeader/>

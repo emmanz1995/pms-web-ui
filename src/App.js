@@ -31,7 +31,7 @@ class App extends Component {
       this.setState({ currentUser: value })
     );
   }
-
+// handling the routes of the different pages
   render(){
     return (
       <div className="App">

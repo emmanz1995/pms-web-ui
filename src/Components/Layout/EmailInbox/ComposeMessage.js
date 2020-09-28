@@ -16,6 +16,7 @@ class ComposeMessage extends React.Component {
 
     constructor(props) {
         super(props);
+        // setting all the states
         this.state= {
             selectedPage: 0,
             selectedContact: null,
@@ -24,13 +25,15 @@ class ComposeMessage extends React.Component {
             serverError: null,
             hasMorePages: true
         }
+        // binding all the functions
         this.validator = new SimpleReactValidator();
         this.toggle = this.toggle.bind(this);
         this.getContacts = this.getContacts.bind(this);
         this.handleContactOptions = this.handleContactOptions.bind(this);
         this.onComposeMessage = this.onComposeMessage.bind(this);
     }
-
+    // event to open the modal
+    // code based on https://bit.dev/reactstrap/reactstrap/modal
     toggle(event) {
         event.preventDefault();
         this.validator = new SimpleReactValidator();
@@ -41,18 +44,22 @@ class ComposeMessage extends React.Component {
     componentDidMount() {
         this._isMounted = true;
     }
-
+    // connects MessageInboxService.js to the frontend logic
     async getContacts() {
         let page =  this.state.selectedPage;
+        // defining currentUserId as a prop
         const { currentUserId } = this.props
         if (this.state.hasMorePages) {
             const response = await MessageInboxService.getUserContacts(this._limit, page, currentUserId, this._disablePagination, [ "assignedTo.fullName,DESC" ])
+                // the idea of this code was based on https://www.smashingmagazine.com/2020/06/rest-api-react-fetch-axios/
                 .then(value => value)
+                // sets errors for the composeMessage and logs error into the console
                 .catch(errors => {
                     console.error("Errors to fetch user contact data", errors)
                 });
-
+            // mapping response in a variable in order to display the name and userId of the contact that user wants to send a message to
             const options = response?.results.map(x => { return { value: x.userId, label: x.fullName } });
+            // this is to set up the pagination for the contact when the user wants to select a contact
             const hasMore = (response?.totalRecords > this._limit * (page + 1));
 
             this.setState({ selectedPage: page + 1, hasMorePages: hasMore})
@@ -74,19 +81,23 @@ class ComposeMessage extends React.Component {
     onComposeMessage(e) {
         e.preventDefault();
         if (this.validator.allValid()) {
+            // setting the message variables with the states and prop deifned earlier
             const composeMessage = {
                 toUserId: this.state.selectedContact.value,
                 fromUserId: this.props.currentUserId,
                 subject: this.state.subject,
                 message: this.state.message
             }
-
+            // logs compose message into the console
             console.log(composeMessage);
-
+            // calling the onComposeNewMessage function from MessageInboxService.js file
             MessageInboxService.onComposeNewMessage(composeMessage)
+                // setting a success promise that will alert out a message if the message was successfully composed
+                // code based on https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example and https://www.npmjs.com/package/react-alert
                 .then((success) => {
                     this.props.alert.success(`You have successfully sent message to ${this.state.selectedContact.label}`);
                     this.setState({modal: !this.state.modal})
+                   // handles error when there is a error that occurs
                 }).catch((fail) => {
                 console.log(fail);
                 this.setState({serverError: fail});
@@ -96,12 +107,11 @@ class ComposeMessage extends React.Component {
             this.forceUpdate();
         }
     }
-
     componentWillUnmount() {
         this._isMounted = false;
     }
-
     render(){
+        // return jsx code, this is for the visual look of the website
         return (
             <div className="modal-button">
                 <button className="btn-compose" onClick={this.toggle}>Compose Message</button>
@@ -111,7 +121,9 @@ class ComposeMessage extends React.Component {
                     </ModalHeader>
                     <ModalBody>
                         <div className="form-body">
-                            <div className="alert alert-danger" role="alert" style={{ display: ( this.state.serverError ? 'block':'none'), width: '73%' }} >
+                            {/* creating the alert message in jsx using bootstrap 4 class component */}
+                            {/* code based on https://getbootstrap.com/docs/4.0/components/alerts/ */}
+                            <div className="alert alert-danger" role="alert" style={{ display: ( this.state.serverError ? 'block':'none'), width: '73%' }}>
                                 {this.state.serverError}
                             </div>
                             <div className="form-group">
@@ -124,20 +136,22 @@ class ComposeMessage extends React.Component {
                                     additional={this._defaultAdditional}
                                 />
                                 <div className="error-message">
+                                    {/*based on https://www.npmjs.com/package/simple-react-validator*/}
                                     {this.validator.message('contact', this.state.selectedContact, 'required')}
                                 </div>
                             </div>
                             <div className="form-group">
                             <input type="text" id="subject" name="subject" placeholder="Subject" onChange={e => this.setState({ subject: e.target.value }) } />
                                 <div className="error-message">
-                                    {this.validator.message('subject', this.state.subject, 'required')}
+                                    {/*based on https://www.npmjs.com/package/simple-react-validator*/}
+                                    {this.validator.message('subject', this.state.subject, 'required', { className: 'text-danger' })}
                                 </div>
                             </div>
                             <div className="form-group">
                             <textarea id="message-area" name="message" placeholder="Your Message" onChange={e => this.setState({ message: e.target.value }) }>
                             </textarea>
                                 <div className="error-message">
-                                    {this.validator.message('message', this.state.message, 'required')}
+                                    {this.validator.message('message', this.state.message, 'required', { className: 'text-danger' })}
                                 </div>
                             </div>
                         </div>

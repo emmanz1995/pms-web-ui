@@ -9,6 +9,7 @@ import './Profile.css';
 class ChangePassword extends Component {
     constructor(props) {
         super(props);
+            // setting all the states
             this.state = {
                 modal: false,
                 password: '',
@@ -16,6 +17,7 @@ class ChangePassword extends Component {
                 passwordResetError: '',
                 passwordServerError: ''
             }
+            // this sets up the custom message for error message and creates the regex needed to validate password
             this.validator = new SimpleReactValidator({
                 validators: {
                   password: {
@@ -27,38 +29,49 @@ class ChangePassword extends Component {
                   }
                 }
               });
+        // binding all the functions
         this.toggle = this.toggle.bind(this);
         this.onChange = this.onChange.bind(this);
         this.submit = this.submit.bind(this);
     }
+    // event to open the modal
+    // code based on https://bit.dev/reactstrap/reactstrap/modal
     toggle(e) {
         e.preventDefault();
+        // hide error messages when the change password button was clicked
         this.validator.hideMessages();
+        // clears all the fields when the change password button was clicked
         this.setState({ modal: !this.state.modal, password: '', confirmPassword: '', passwordResetError: '', passwordServerError: ''});
     }
 
     onChange(e) {
         this.setState({[e.target.name]: e.target.value});
-        // console.log({[e.target.name]:e.target.value});
     }
 
     submit(e) {
         e.preventDefault();
+        // this conditional statement is based on https://www.npmjs.com/package/simple-react-validator
         if(this.validator.allValid()) {
-        
+            // setting password and confirmPassword variables from AccountService with states
+            // defining credentials as a variable with both the password and confirmPassword variable from AccountService
             const credential = { password: this.state.password, confirmPassword: this.state.confirmPassword };
-
+            // logging userId into the console
             console.log(`UserId = ${this.props.userId}`);
+            // injecting onChangePassword function from AccountService with credentials and userId as arguments
             AccountService
             .onChangePassword(credential,this.props.userId)
+            // setting a success promise that will alert out a message if the message was successfully composed
+            // code based on https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example and https://www.npmjs.com/package/react-alert
             .then((success) => {
                 this.props.alert.success('You have successfully changed your password');
                 this.setState({modal: !this.state.modal})
+              // handles error when there is a error that occurs
             }).catch((fail) => {
                 console.log(fail);
                 this.setState({passwordResetError: fail, passwordServerError: fail});
             });
         } else {
+            // these codes are based on https://www.npmjs.com/package/simple-react-validator
             this.validator.showMessages();
             this.forceUpdate();
         } 
@@ -66,6 +79,8 @@ class ChangePassword extends Component {
 
     render() {
         const passwordServerError = this.state.passwordServerError;
+
+        // custom error messages for confirm password
         const customConfirmPasswordMessage = { messages: 
             {
                 in: 'New Password and Confirm Password does not match',
@@ -74,6 +89,7 @@ class ChangePassword extends Component {
             }
         };
 
+        // custom error messages for password
         const customPasswordMessage = { messages: 
             {
                 passwordValidator: 'New Password must meet the requirements with minimum of 6 characters, atleast 1 capital letter, 1 symbol and 1 number',
@@ -82,9 +98,11 @@ class ChangePassword extends Component {
             }
         };
 
-        const passwordResetError = this.state.passwordResetError || 
+        const passwordResetError = this.state.passwordResetError ||
+        {/*based on https://www.npmjs.com/package/simple-react-validator*/}
         this.validator.message('newPassword', this.state.password, 'required|min:6|max:150|password', customPasswordMessage) ||
         this.validator.message('confirmPassword', this.state.confirmPassword, `required|min:6|max:150|in:${this.state.password}`, customConfirmPasswordMessage);
+        // returned jsx code
         return (
             <div className="model">
                 <Button id="btn-edit" value="" onClick={this.toggle}>Edit</Button>
@@ -92,6 +110,8 @@ class ChangePassword extends Component {
                     <ModalHeader className="modal-header" toggle={this.toggle}>Change Password</ModalHeader>
                     <ModalBody className="modal-background">
                         <p><b>Create new password</b></p>
+                        {/* creating the alert message in jsx using bootstrap 4 class component */}
+                        {/* code based on https://getbootstrap.com/docs/4.0/components/alerts/ */}
                         <div className="alert alert-danger" role="alert" style={{ display: (passwordResetError || passwordServerError ? 'block':'none'), width: '73%' }} >
                              {passwordResetError || passwordServerError}
                         </div>

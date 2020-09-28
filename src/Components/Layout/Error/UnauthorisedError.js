@@ -3,15 +3,15 @@ import './UnauthorisedError.css';
 import { Link } from 'react-router-dom'
 
 class UnauthorisedError extends Component {
-
+    // mounts color for the body
     componentWillMount() {
         document.body.style.backgroundColor = "#233142";
     }
-
+    // unmounts colour that has been set
     componentWillUnmount() {
         document.body.style.backgroundColor = null;
     }
-
+    // base on https://html.developreference.com/article/10649829/Handling+401+unauthorised+error+in+axios+react-redux+application
     render() {
         return (
             <div className="forbidden-bg">
@@ -35,5 +35,4 @@ class UnauthorisedError extends Component {
         );
     }
 }
-
 export default UnauthorisedError;

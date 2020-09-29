@@ -90,32 +90,33 @@ class Upload extends Component {
         const selectedFile = e.target.files[0];
 
         let validationErrors = [];
-
+        // creates validation error if the user does not select a file
         if (selectedFile && !selectedFile.name) {
             validationErrors.push("File is required")
         }
-
+        // error is triggered if the size of the file goes over limit
         if (selectedFile.size > 2e6) {
             validationErrors.push("File size limit exceeded, uploading file size should be below 2MB");
         }
-
+        // validation error is triggered if the user attempts to upload a file with unsupported file type
         if (!this._fileTypes.includes(selectedFile.name.split('.').pop())) {
             validationErrors.push("Supported file types are doc,docx,ppt,pptx,xls,xlsx,png,jpg,pdf,txt and jpeg");
         }
-
+        // validation error is triggered if the user attempts to upload a file without any of these characters
         if (!selectedFile.name.split('.').slice(0, -1).join('.').match("^[0-9a-zA-Z_\\-. ]+\$")) {
             validationErrors.push("File name must only contain letters(a-z, A-Z), numbers (0-9), spaces and symbols (_-.)");
         }
-
+        // validation error is triggered if length is less than 0
         if (validationErrors.length > 0) {
             this.setState({ fileErrors:  validationErrors });
             return false;
         }
-
+        // sets the state selectedFile with onChange selectedFile variable
         this.setState({ selectedFile: selectedFile })
     }
 
     render() {
+        // returns jsx
         return (
             <div>
                 <button id="btn-upload" value="" onClick={this.toggle}>Upload File</button>

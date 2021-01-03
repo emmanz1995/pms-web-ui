@@ -1,6 +1,6 @@
+.env.local
 node_modules
 build/
-.env.local
 .idea/.gitignore
 .idea/misc.xml
 .idea/modules.xml
